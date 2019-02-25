@@ -42,9 +42,9 @@ To build a directory of tiles, please start with an empty directory.
 
 This will create a directory tree under RNC_ROOT. To make this available for SFMC clients do the following as root:
 
-- **rm -rf /var/sfmc-webserver/static/maps/RNC_ROOT**
+- **rm -rf /opt/sfmc-webserver/static/maps/RNC_ROOT**
 - **chown -R sfmc-webserver:sfmc-webserver RNC_ROOT**
-- **mv RNC_ROOT /var/sfmc-webserver/static/maps**
+- **mv RNC_ROOT /opt/sfmc-webserver/static/maps**
 
 To see the command line options:
 
