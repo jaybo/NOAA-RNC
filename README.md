@@ -6,11 +6,15 @@ These Python scripts fetch and format individual NOAA RNC tiles for use by SFMC
 
 These scripts were tested on a CentOS7 minimal system with python3.6. To setup Python do the following as root:
 
-yum install git
-yum install python36
-yum install python36-pip
-pip3.6 install requests
-pip3.6 install Pillow
+**yum install git**
+
+**yum install python36**
+
+**yum install python36-pip**
+
+**pip3.6 install requests**
+
+**pip3.6 install Pillow**
 
 **mbtilesFetch.py**
 
@@ -34,7 +38,7 @@ To see the command line options:
 **mbtilesQuilt.py**
 
 Takes the mtile files and creates a directory tree of tiles suitable for placing in
-/opt/sfmc-webserver/static/maps and then consumed by SFMC clients. If a tile is in multiple panels, they are overlayed or ''Quilted'' together. The resulting directory tree is ~17GB for a full set of tiles.
+/opt/sfmc-webserver/static/maps and then consumed by SFMC clients. If a tile is in multiple panels, they are overlayed or "Quilted" together. The resulting directory tree is ~17GB for a full set of tiles.
 
 To build a directory of tiles, please start with an empty directory.
 
@@ -43,7 +47,9 @@ To build a directory of tiles, please start with an empty directory.
 This will create a directory tree under RNC_ROOT. To make this available for SFMC clients do the following as root:
 
 **rm -rf /var/sfmc-webserver/static/maps/RNC_ROOT**
+
 **chown -R sfmc-webserver:sfmc-webserver RNC_ROOT**
+
 **mv RNC_ROOT /var/sfmc-webserver/static/maps**
 
 To see the command line options:
@@ -52,8 +58,8 @@ To see the command line options:
 
 **SFMC setup**
 
-To use the set of tiles, in the SFMC page under your user name, go to ''Map Settings'' 
-and then click on ''Create Map Tile Layer Setting'' 
+To use the set of tiles, in the SFMC page under your user name, go to "Map Settings" 
+and then click on "Create Map Tile Layer Setting" 
 In the "Create Map Tile Layer Setting Form" name the layer as you want. Click the TMS box.
 Enter "/sfmc/static/maps/RNC_ROOT/{z}/{y}/{x}.png" in the URL Template box.
 Enter NOAA in the Attribution box.
