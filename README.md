@@ -6,15 +6,11 @@ These Python scripts fetch and format individual NOAA RNC tiles for use by SFMC
 
 These scripts were tested on a CentOS7 minimal system with python3.6. To setup Python do the following as root:
 
-**yum install git**
-
-**yum install python36**
-
-**yum install python36-pip**
-
-**pip3.6 install requests**
-
-**pip3.6 install Pillow**
+- **yum install git**
+- **yum install python36**
+- **yum install python36-pip**
+- **pip3.6 install requests**
+- **pip3.6 install Pillow**
 
 **mbtilesFetch.py**
 
@@ -23,17 +19,17 @@ The second is to update existing local SQLite3 mtile files. The full set of mtil
 
 To fetch all the NOAA RNC panels do:
 
-**./mbtilesFetch.py**
+- **./mbtilesFetch.py**
 
 This will fetch all the panels and store them in the MBTILES directory.
 
 NOAA Updates the RNC files monthly, so every month one can update the existing tiles with:
 
-**./mbtilesFetch.py --update**
+- **./mbtilesFetch.py --update**
 
 To see the command line options:
 
-**./mbtilesFetch.py --help**
+- **./mbtilesFetch.py --help**
 
 **mbtilesQuilt.py**
 
@@ -42,19 +38,17 @@ Takes the mtile files and creates a directory tree of tiles suitable for placing
 
 To build a directory of tiles, please start with an empty directory.
 
-**./mbtilesQuilt.py**
+- **./mbtilesQuilt.py**
 
 This will create a directory tree under RNC_ROOT. To make this available for SFMC clients do the following as root:
 
-**rm -rf /var/sfmc-webserver/static/maps/RNC_ROOT**
-
-**chown -R sfmc-webserver:sfmc-webserver RNC_ROOT**
-
-**mv RNC_ROOT /var/sfmc-webserver/static/maps**
+- **rm -rf /var/sfmc-webserver/static/maps/RNC_ROOT**
+- **chown -R sfmc-webserver:sfmc-webserver RNC_ROOT**
+- **mv RNC_ROOT /var/sfmc-webserver/static/maps**
 
 To see the command line options:
 
-**./mbtilesQuilt.py --help**
+- **./mbtilesQuilt.py --help**
 
 **SFMC setup**
 
