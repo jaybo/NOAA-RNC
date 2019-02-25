@@ -52,8 +52,10 @@ To see the command line options:
 
 **SFMC setup**
 
-To use the set of tiles, in the SFMC page under your user name, go to "Map Settings" 
-and then click on "Create Map Tile Layer Setting" 
-In the "Create Map Tile Layer Setting Form" name the layer as you want. Click the TMS box.
-Enter "/sfmc/static/maps/RNC_ROOT/{z}/{y}/{x}.png" in the URL Template box.
-Enter NOAA in the Attribution box.
+To use the set of tiles:
+- in the SFMC page under your user name, go to "Map Settings"
+- then click on "Create Map Tile Layer Setting" 
+- in the "Create Map Tile Layer Setting Form" name the layer as you want
+- click the TMS box.
+- enter "/sfmc/static/maps/RNC_ROOT/{z}/{y}/{x}.png" in the URL Template box
+- enter NOAA in the Attribution box
