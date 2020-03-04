@@ -1,0 +1,54 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["--full", "--verbose"]
+        },
+        {
+            "name": "quilt all mbtiles",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/mbtilesQuilt.py",
+            "console": "integratedTerminal",
+            "args": [
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_01.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_02.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_03.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_04.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_05.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_06.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_07.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_08.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_09.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_10.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_11.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_12.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_13.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_14.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_15.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_16.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_17.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_18.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_19.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_20.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_21.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_22.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_23.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_24.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_25.mtiles",
+                    "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_26.mtiles",
+                "--outdir", "E:/DeepZoom/NOAA.RNC.Data",
+                "--verbose",
+            ]
+        }
+    ]
+}
