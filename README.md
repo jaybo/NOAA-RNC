@@ -59,3 +59,8 @@ To use the set of tiles:
 - click the TMS box.
 - enter "/sfmc/static/maps/RNC_ROOT/{z}/{y}/{x}.png" in the URL Template box
 - enter NOAA in the Attribution box
+
+**JayB additions**
+
+- Allow flipping of Y axis
+- Embed JSON metadata in PNG
