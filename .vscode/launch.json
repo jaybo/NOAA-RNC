@@ -18,7 +18,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/mbtilesQuilt.py",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "args": [
                     "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_01.mtiles",
                     "E:/DeepZoom/NOAA.RNC.Fetch/MBTILES/MBTILES_02.mtiles",
