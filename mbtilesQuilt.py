@@ -7,9 +7,11 @@
 import sqlite3
 import os
 import os.path
+import io
 import argparse
 from tempfile import NamedTemporaryFile
 from PIL import Image
+from PIL.PngImagePlugin import PngImageFile, PngInfo
 
 
 def mergeImage(ofn, png, qVerbose):
@@ -44,24 +46,40 @@ for fn in args.mtiles:
     if not args.quiet:
         print('Opening', fn)
     with sqlite3.connect(fn) as conn:
-        results = conn.execute('SELECT * FROM tiles;')
-        for result in results:  # Walk over rows
-            (zoom, column, row, png) = result
-            # if zoom > 7:
-            #   continue
-            # jayb Y is inverted in TMS (default format for MBTiles)
-            if args.flip_y:
-                row = (2 ** zoom) - (1 + row)
-            odir = os.path.join(args.outdir, 'Z' + str(zoom), str(row))
-            ofn = os.path.join(odir, '{}.png'.format(column))
-            if not os.path.isdir(odir):
-                # if args.verbose:
-                #   print('Making directory', odir)
-                os.makedirs(odir)
-            if os.path.exists(ofn):
-                mergeImage(ofn, png, args.verbose)
-            else:  # Does not exist
-                if args.verbose:
-                    print('Saving', ofn, 'length', len(png))
-                with open(ofn, 'wb') as ofp:
-                    ofp.write(png)
+        with sqlite3.connect(fn) as conn_meta:
+            results = conn.execute('SELECT * FROM tiles;')
+            for result in results:  # Walk over rows
+                (zoom, column, row, png) = result
+                metadata = None
+                if zoom <= 7:
+                    continue
+                metas = conn_meta.execute("SELECT * FROM grid_data WHERE zoom_level = " + str(zoom) + " AND tile_column = " + str(column) + " AND tile_row = " + str(row) + ";")
+                for meta in metas:
+                    (z, c, r, kn, kj) = meta
+                if kj:
+                    metadata = kj
+
+                # jayb Y is inverted in TMS (default format for MBTiles)
+                if args.flip_y:
+                    row = (2 ** zoom) - (1 + row)
+                odir = os.path.join(args.outdir, 'Z' + str(zoom), str(row))
+                ofn = os.path.join(odir, '{}.png'.format(column))
+                if not os.path.isdir(odir):
+                    # if args.verbose:
+                    #   print('Making directory', odir)
+                    os.makedirs(odir)
+                if os.path.exists(ofn):
+                    mergeImage(ofn, png, args.verbose)
+                else:  # Does not exist
+                    if args.verbose:
+                        print('Saving', ofn, 'length', len(png))
+                    if metadata is None:
+                        with open(ofn, 'wb') as ofp:
+                            ofp.write(png)
+                    else:
+                        targetImage = Image.open(io.BytesIO(png))
+                        #targetImage = Image.frombytes(png)
+                        #targetImage.fromstring(png)
+                        metainfo = PngInfo()
+                        metainfo.add_text("meta", metadata)
+                        targetImage.save(ofn, pnginfo=metainfo)
