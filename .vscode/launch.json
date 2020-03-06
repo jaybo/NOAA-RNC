@@ -14,7 +14,17 @@
             "args": ["--full", "--verbose"]
         },
         {
-            "name": "quilt all mbtiles",
+            "name": "1. fetch all mbtiles",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/mbtilesFetch.py",
+            "console": "externalTerminal",
+            "args": [
+                "--verbose",
+            ]
+        },
+        {
+            "name": "2. quilt all mbtiles",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/mbtilesQuilt.py",
