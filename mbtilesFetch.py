@@ -48,30 +48,77 @@ def procDeletes(ofn, content, qVerbose):
 
 parser = argparse.ArgumentParser()
 verbose = parser.add_mutually_exclusive_group()
-verbose.add_argument('--verbose', action='store_true',
+verbose.add_argument('--verbose', action='store_true', default=True,
                      help='Output diagnositcs')
-verbose.add_argument('--quiet', action='store_true',
+verbose.add_argument('--quiet', action='store_true', default=False,
                      help='No non-error output')
 action = parser.add_mutually_exclusive_group()
 action.add_argument('--full', action='store_true', help='Pull a full set')
 action.add_argument('--update', action='store_true',
                     help='Pull recent updates')
 parser.add_argument('--urlfull', help='NOAA URL for full pulls',
-                    default='https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_{}.mbtiles')
-parser.add_argument('--urlupdate', help='NOAA URL for update pulls',
-                    default='https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_{}-updates.mbtiles')
-parser.add_argument('--urldelete', help='NOAA URL for delete pulls',
-                    default='https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_{}-deletes.json')
-parser.add_argument('--panels', action='append', help='which panels to pull')
+                    default='https://distribution.charts.noaa.gov/ncds/mbtiles/ncds_{}.mbtiles')
+# parser.add_argument('--urlupdate', help='NOAA URL for update pulls',
+#                     default='https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_{}-updates.mbtiles')
+# parser.add_argument('--urldelete', help='NOAA URL for delete pulls',
+#                     default='https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_{}-deletes.json')
+parser.add_argument('--panels', nargs='+', help='which panels to pull')
 parser.add_argument('--outdir', default='MBTILES',
                     help='where to write output to')
 args = parser.parse_args()
 
 if args.panels is None:
-    args.panels = []
-#   for i in range(1, 27):
-    for i in range(1, 27):
-        args.panels.append('{:02d}'.format(i))
+    args.panels = [
+                "01a",
+                "01b",
+                "02a",
+                "02b",
+                "03",
+                "04",
+                "05",
+                "06",
+                "07",
+                "08",
+                "09",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17a",
+                "17b",
+                "18",
+                "19",
+                "19b",
+                "19c",
+                "19d",
+                "20a",
+                "20b",
+                "20c",
+                "21",
+                "22a",
+                "22b",
+                "23a",
+                "23b",
+                "24a",
+                "24b",
+                "25a",
+                "25b",
+                "26a",
+                "26b",
+                "27",
+                "28a",
+                "28b",
+                "29",
+                "30",
+                "31a",
+                "31b"]
+    
+
+    # for i in range(1, 27):
+    #     args.panels.append('{:02d}'.format(i))
 
 if not args.full and not args.update:
     args.full = True
@@ -92,11 +139,11 @@ if not args.full:  # Pull down any deletes
             if r.status_code != 404:
                 print('Error fetching', url, 'status_code', r.status_code)
             continue
-        ofn = os.path.join(args.outdir, 'MBTILES_{}.mtiles'.format(panel))
+        ofn = os.path.join(args.outdir, 'ncds_{}.mbtiles'.format(panel))
         procDeletes(ofn, r.content, args.verbose)
 
 for panel in args.panels:
-    ofn = os.path.join(args.outdir, 'MBTILES_{}.mtiles'.format(panel))
+    ofn = os.path.join(args.outdir, 'ncds_{}.mbtiles'.format(panel))
     if not args.full and not os.path.exists(ofn):
         print(ofn, 'does not exist to apply an update to')
         continue

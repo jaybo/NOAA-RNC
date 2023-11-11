@@ -21,7 +21,7 @@
             "console": "externalTerminal",
             "args": [
                 "--verbose",
-                "--outdir",  "D:/DeepZoom/NOAA.RNC.Fetch"
+                "--outdir",  "D:/DeepZoom/NOAA.RNC.Fetch",
             ]
         },
         {
@@ -31,34 +31,8 @@
             "program": "${workspaceFolder}/mbtilesQuilt.py",
             "console": "externalTerminal",
             "args": [
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_01.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_02.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_03.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_04.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_05.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_06.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_07.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_08.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_09.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_10.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_11.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_12.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_13.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_14.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_15.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_16.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_17.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_18.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_19.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_20.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_21.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_22.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_23.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_24.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_25.mtiles",
-                    "D:/DeepZoom/NOAA.RNC.Fetch/MBTILES_26.mtiles",
-                "--outdir", "D:/DeepZoom/NOAA.RNC.Tiles",
-
+                "--indir", "D:/DeepZoom/NOAA.RNC.Fetch",
+                "--outdir", "D:/DeepZoom/NOAA.RNC.Tiles/feet",
             ]
         }
     ]
