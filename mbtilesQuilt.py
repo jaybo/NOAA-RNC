@@ -9,27 +9,64 @@ import os
 import os.path
 import io
 import argparse
+import numpy as np
 from tempfile import NamedTemporaryFile
 import sqlite3
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 
-
-
-
+transparent = True
+colors = [
+    [0xF4, 0xE8, 0xC1],
+    [0xEF, 0xD8, 0xA3]
+]
 
 def mergeImage(ofn, png, qVerbose):
+    # merge pngBlob into existing image
     if qVerbose:
         print('Merging', ofn, len(png))
-    with NamedTemporaryFile(delete=False) as ifp:
-        ifp.write(png)
-        ifp.flush()
-        ifp.close()
-        im0 = Image.open(ofn).convert('RGBA')
-        im1 = Image.open(ifp.name).convert('RGBA')
-        im2 = Image.alpha_composite(im0, im1).convert('P')
-        im2.save(ofn)
-        ifp.close()
+    im0 = Image.open(ofn).convert('RGBA')
+    im1 = Image.open(io.BytesIO(png)).convert('RGBA')
+    im2 = Image.alpha_composite(im0, im1)
+    im3, hasData = makeImageColorTransparent(im2)
+    return (im3, hasData)
+
+
+
+def makeImageColorTransparent(image):
+    # make all instances of a given color transparent
+    # image must be RGBA. 
+    # returns image and bool indicating image has non-transparent data
+    if not transparent:
+        return image
+    array = np.array(image, dtype=np.ubyte)
+    h, w, z = array.shape
+    mask = array[:, :, -1] == 0 # original alpha 
+    for color in colors:
+        mask |= (array[:,:,:3] == color).all(axis=2)
+    alpha = np.where(mask, 0, 255)
+    array[:,:,-1] = alpha
+    hasData = alpha.max() > 0
+    imageOut = Image.fromarray(np.ubyte(array))
+    return (imageOut, hasData)
+
+
+def makePngColorTransparent(png):
+    # make all instances of a given color transparent
+    image = Image.open(io.BytesIO(png)).convert("RGBA")
+    imageOut, hasData = makeImageColorTransparent(image)
+    return (imageOut, hasData)
+
+
+def addMetadataAndSave(ofn, image = None, metadata = None):
+    # add metadata to a png
+    if image:
+        targetImage = image
+    else:
+        targetImage = Image.open(ofn)
+    metainfo = PngInfo()
+    metainfo.add_text("meta", metadata)
+    targetImage.save(ofn, pnginfo=metainfo)
 
 
 parser = argparse.ArgumentParser()
@@ -50,12 +87,14 @@ parser.add_argument('--metadataUnits', default="feet",
                     help='Add metadata depth units')
 parser.add_argument('--merge', default=True,
                     help='Enable merging of tiles - otherwise overwrite')
+
 args = parser.parse_args()
 
 if len(args.panels) == 0:
     args.panels = [
                     "01a",
                     "01b",
+                    "01c", # 2024.06.01
                     "02a",
                     "02b",
                     "03",
@@ -75,7 +114,7 @@ if len(args.panels) == 0:
                     "17a",
                     "17b",
                     "18",
-                    "19",
+                    "19a", # renamed from "19" 2024.06.01
                     "19b",
                     "19c",
                     "19d",
@@ -141,8 +180,9 @@ for panel in args.panels:
                 # jayb Y is inverted in TMS (default format for MBTiles)
                 if args.flip_y:
                     row = (2 ** zoom) - (1 + row)
-                odir = os.path.join(args.outdir, 'Z' + str(zoom), str(row))
-                ofn = os.path.join(odir, '{}.png'.format(column))
+                odir = os.path.join(args.outdir, 'Z' + str(zoom), str(row)).replace("\\","/")
+                ofn = os.path.join(odir, '{}.png'.format(column)).replace("\\","/")
+
                 if not os.path.isdir(odir):
                     # if args.verbose:
                     #   print('Making directory', odir)
@@ -154,18 +194,24 @@ for panel in args.panels:
                         print(count, panel) # newline
 
                 if args.merge and os.path.exists(ofn):
-                        mergeImage(ofn, png, args.verbose)
+                        image, hasData = mergeImage(ofn, png, args.verbose)
+                        if hasData:
+                            if (metadata is None):
+                                image.convert('P').save(ofn)
+                            else:
+                                addMetadataAndSave(ofn, image, metadata)
                 else:  # Does not exist
                     if args.verbose:
                         j = 1
                         # print('Saving', ofn, 'length', len(png))
                     if metadata is None:
-                        with open(ofn, 'wb') as ofp:
-                            ofp.write(png)
+                        image = Image.open(io.BytesIO(png)).convert("RGBA")
+                        imageOut, hasData = makeImageColorTransparent(image)
+                        if hasData:
+                            imageOut.convert('P').save(ofn)
                     else:
-                        targetImage = Image.open(io.BytesIO(png))
-                        #targetImage = Image.frombytes(png)
-                        #targetImage.fromstring(png)
-                        metainfo = PngInfo()
-                        metainfo.add_text("meta", metadata)
-                        targetImage.save(ofn, pnginfo=metainfo)
+                        image = Image.open(io.BytesIO(png)).convert("RGBA")
+                        imageOut, hasData = makeImageColorTransparent(image)
+                        if hasData:
+                            imageOut = imageOut.convert('P')
+                            addMetadataAndSave(ofn, imageOut, metadata)

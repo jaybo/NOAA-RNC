@@ -71,6 +71,7 @@ if args.panels is None:
     args.panels = [
                 "01a",
                 "01b",
+                "01c", # 2024.06.01
                 "02a",
                 "02b",
                 "03",
@@ -90,7 +91,7 @@ if args.panels is None:
                 "17a",
                 "17b",
                 "18",
-                "19",
+                "19a", # renamed from "19" 2024.06.01
                 "19b",
                 "19c",
                 "19d",

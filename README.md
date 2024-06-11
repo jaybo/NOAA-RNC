@@ -64,3 +64,5 @@ To use the set of tiles:
 
 - Allow flipping of Y axis
 - Embed JSON metadata in PNG
+
+- panels0.cmd, ... panels30.cmd run quilting of all panels in parallel.  Maybe 5 hours?
